@@ -2,8 +2,14 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../database';
 
 const Destiny = sequelize.define(
-  'destiny',
+  'Destiny',
   {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
     country_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,9 +22,18 @@ const Destiny = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
-    modelName: 'Destiny',
     tableName: 'destinies',
   }
 );

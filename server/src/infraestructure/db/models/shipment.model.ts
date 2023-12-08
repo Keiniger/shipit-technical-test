@@ -4,6 +4,12 @@ import { sequelize } from '../database';
 const Shipment = sequelize.define(
   'Shipment',
   {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -42,7 +48,6 @@ const Shipment = sequelize.define(
     },
   },
   {
-    modelName: 'Shipment',
     tableName: 'shipments',
   }
 );

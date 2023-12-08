@@ -5,7 +5,7 @@ import Shipment from './shipment.model';
 import Destiny from './destiny.model';
 
 const Address = sequelize.define(
-  'address',
+  'Address',
   {
     destiny_id: {
       type: DataTypes.INTEGER,
@@ -17,7 +17,6 @@ const Address = sequelize.define(
     },
   },
   {
-    modelName: 'Address',
     tableName: 'addresses',
   }
 );
