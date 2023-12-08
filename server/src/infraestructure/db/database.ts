@@ -7,8 +7,8 @@ export const sequelize = new Sequelize(
   String(process.env.POSTGRES_USER),
   String(process.env.POSTGRES_PASSWORD),
   {
-    host: process.env.POSTGRES_HOST,
-    dialect: 'postgres', // Or any other dialect supported by Sequelize
+    host: 'pg',
+    dialect: 'postgres',
   }
 );
 

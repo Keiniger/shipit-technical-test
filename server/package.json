@@ -7,6 +7,8 @@
     "start:dev": "nodemon --watch src src/index.ts",
     "start:dev:inspect": "nodemon --inspect=0.0.0.0:3001 --watch src src/index.ts",
     "start": "npm run build && node build/index.js",
+    "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "db:migrate": "npx sequelize-cli db:migrate",
     "lint": "eslint . --ext .ts",
     "prettier-format": "run-script-os",
     "test": "jest",
