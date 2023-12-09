@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Typography, Row, Col, Layout, Menu } from 'antd';
+import { Content, Header } from 'antd/es/layout/layout';
+const { Title } = Typography;
+
+import classes from './App.module.css';
+
+import DestinySelect from './components/DestinySelect';
+import DimensionsInput from './components/DimensionsInputs';
+import Cotization from './components/Cotization';
+import CreateShipment from './components/CreateShipment';
+import ShipmentResult from './components/ShipmentResult';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Layout className={classes.layout}>
+      <Header className={classes.header}>
+        <Title
+          className={classes.title}
+          level={2}>
+          Prueba técnica de Shipit
+        </Title>
+        <Menu theme="dark" mode="horizontal" />
+      </Header>
+      <Content className={classes.content}>
+        <Row
+          className={classes.row}
+          justify="center"
+          align="middle">
+          <Col>
+            <DestinySelect />
+            <DimensionsInput />
+            <Cotization />
+            <CreateShipment />
+            <ShipmentResult statusCode={undefined} />
+          </Col>
+        </Row>
+      </Content>
+    </Layout>
+  );
+};
 
 export default App
