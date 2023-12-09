@@ -1,0 +1,21 @@
+.layout {
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    color: white !important;
+}
+
+.content {
+    padding: 6rem;
+    height: 100%;
+}
+
+.row {
+    height: 100%;
+}
