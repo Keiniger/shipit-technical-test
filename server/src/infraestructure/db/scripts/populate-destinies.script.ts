@@ -3,6 +3,7 @@ import { config } from '../../../config';
 import Destiny from '../models/destiny.model';
 
 type DestinyData = {
+  id: number;
   region_id: number;
   region_name: string;
   country_name: string;
@@ -36,6 +37,7 @@ async function populateDestinies() {
   if (!destinies) return;
 
   const remappedDestinies = destinies.map((d) => ({
+    id: d.id,
     country_name: d.country_name,
     external_id: d.region_id,
     name: d.region_name,
