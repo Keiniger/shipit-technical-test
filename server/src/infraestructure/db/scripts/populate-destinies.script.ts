@@ -7,6 +7,7 @@ type DestinyData = {
   region_id: number;
   region_name: string;
   country_name: string;
+  name: string;
 };
 
 async function fetchDestinations() {
@@ -40,7 +41,8 @@ async function populateDestinies() {
     id: d.id,
     country_name: d.country_name,
     external_id: d.region_id,
-    name: d.region_name,
+    region_name: d.region_name,
+    name: d.name,
   }));
 
   try {
