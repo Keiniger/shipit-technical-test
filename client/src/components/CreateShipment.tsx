@@ -10,7 +10,7 @@ function CreateShipment() {
         });
     };
 
-    return <Button onClick={handleShipmentCreation}>Crear envío</Button>
+    return <Button type="primary" onClick={handleShipmentCreation}>Crear envío</Button>
 }
 
 export default CreateShipment;
