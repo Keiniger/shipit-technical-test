@@ -1,16 +1,25 @@
-import { Typography, Row, Col, Layout, Menu } from 'antd';
+import { Typography, Row, Col, Layout, Menu, Space } from 'antd';
 import { Content, Header } from 'antd/es/layout/layout';
 const { Title } = Typography;
 
 import classes from './App.module.css';
 
-import DestinySelect from './components/DestinySelect';
-import DimensionsInput from './components/DimensionsInputs';
+import DestinySelect, { DestinyId } from './components/DestinySelect';
+import DimensionsInput, { Dimension, Dimensions } from './components/DimensionsInputs';
 import Cotization from './components/Cotization';
 import CreateShipment from './components/CreateShipment';
 import ShipmentResult from './components/ShipmentResult';
+import { useState } from 'react';
 
 function App() {
+  const [selectedDestiny, setSelectedDestiny] = useState<DestinyId | undefined>();
+  const [dimensions, setDimensions] = useState<Dimensions>({
+    [Dimension.Length]: undefined,
+    [Dimension.Width]: undefined,
+    [Dimension.Height]: undefined,
+    [Dimension.Weight]: undefined,
+  });
+
   return (
     <Layout className={classes.layout}>
       <Header className={classes.header}>
@@ -27,11 +36,13 @@ function App() {
           justify="center"
           align="middle">
           <Col>
-            <DestinySelect />
-            <DimensionsInput />
-            <Cotization />
-            <CreateShipment />
-            <ShipmentResult statusCode={undefined} />
+            <Space direction="vertical" size="large">
+              <DestinySelect setSelectedDestiny={setSelectedDestiny} />
+              <DimensionsInput dimensions={dimensions} setDimensions={setDimensions} />
+              <Cotization selectedDestiny={selectedDestiny} dimensions={dimensions} />
+              <CreateShipment />
+              <ShipmentResult statusCode={undefined} />
+            </Space>
           </Col>
         </Row>
       </Content>
