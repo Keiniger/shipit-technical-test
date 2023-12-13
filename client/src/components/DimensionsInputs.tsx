@@ -1,59 +1,55 @@
-import { InputNumber, Space } from "antd";
+import { Form, InputNumber, Space } from "antd";
+import { ShipmentFields } from "./ShipmentForm";
+const { Item } = Form;
 
-export enum Dimension {
-    Length = 'length',
-    Width = 'width',
-    Height = 'height',
-    Weight = 'weight'
-}
+const min = 1, max = 1000, step = 10;
 
-export type Dimensions = {
-    [Dimension.Length]?: number,
-    [Dimension.Width]?: number,
-    [Dimension.Height]?: number,
-    [Dimension.Weight]?: number,
-}
-
-const min = 1, max = 10_000, step = 10;
-
-function DimensionsInputs({ dimensions, setDimensions }: { dimensions: Dimensions, setDimensions: (d: Dimensions) => void }) {
-    const handleDimension = (value: number | null, dimension: Dimension) => {
-        setDimensions({ ...dimensions, [dimension]: Number(value) })
-    };
-
+function DimensionsInputs() {
     return <Space direction="vertical">
-        <InputNumber
-            min={min} max={max} step={step}
-            type="number"
-            addonAfter="cm"
-            placeholder="Largo"
-            value={dimensions.length}
-            onChange={(v) => handleDimension(v, Dimension.Length)}
-        />
-        <InputNumber
-            min={min} max={max} step={step}
-            type="number"
-            addonAfter="cm"
-            placeholder="Ancho"
-            value={dimensions.width}
-            onChange={(v) => handleDimension(v, Dimension.Width)}
-        />
-        <InputNumber
-            min={min} max={max} step={step}
-            type="number"
-            addonAfter="cm"
-            placeholder="Alto"
-            value={dimensions.height}
-            onChange={(v) => handleDimension(v, Dimension.Height)}
-        />
-        <InputNumber
-            min={min} max={max} step={step}
-            type="number"
-            addonAfter="kg"
-            placeholder="Peso"
-            value={dimensions.weight}
-            onChange={(v) => handleDimension(v, Dimension.Weight)}
-        />
+        <Item
+            label="Largo"
+            name={ShipmentFields.Length}
+            rules={[{ required: true, message: 'La longitud es obligatoria' }]}
+        >
+            <InputNumber
+                min={min} max={max} step={step}
+                type="number"
+                addonAfter="cm"
+            />
+        </Item>
+        <Item
+            label="Ancho"
+            name={ShipmentFields.Width}
+            rules={[{ required: true, message: 'El ancho es obligatorio' }]}
+        >
+            <InputNumber
+                min={min} max={max} step={step}
+                type="number"
+                addonAfter="cm"
+            />
+        </Item>
+        <Item
+            label="Alto"
+            name={ShipmentFields.Height}
+            rules={[{ required: true, message: 'El alto es obligatorio' }]}
+        >
+            <InputNumber
+                min={min} max={max} step={step}
+                type="number"
+                addonAfter="cm"
+            />
+        </Item>
+        <Item
+            label="Peso"
+            name={ShipmentFields.Weight}
+            rules={[{ required: true, message: 'El peso es obligatorio' }]}
+        >
+            <InputNumber
+                min={min} max={max} step={step}
+                type="number"
+                addonAfter="kg"
+            />
+        </Item>
     </Space>
 }
 
