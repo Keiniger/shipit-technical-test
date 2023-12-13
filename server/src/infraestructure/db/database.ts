@@ -2,12 +2,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Sequelize } from 'sequelize';
 
+require('dotenv').config();
+
 export const sequelize = new Sequelize(
   String(process.env.POSTGRES_DB),
   String(process.env.POSTGRES_USER),
   String(process.env.POSTGRES_PASSWORD),
   {
-    host: 'pg',
+    host: process.env.POSTGRES_HOST || 'pg',
     dialect: 'postgres',
   }
 );
