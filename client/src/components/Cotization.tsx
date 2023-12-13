@@ -1,6 +1,8 @@
-import { Alert, Button } from "antd";
+import { Alert, Button, Form, FormInstance } from "antd";
 import { useEffect, useState } from "react";
-import { Dimension, Dimensions } from "./DimensionsInputs";
+import { CreateShipmentData, DestinyAndDimensionsFields } from "./ShipmentForm";
+import areFieldsInvalid from "../utils/ValidateFields";
+const { useWatch } = Form;
 
 const formatCurrency = (value: number) => {
     const formatter = new Intl.NumberFormat('es-CL', {
@@ -11,20 +13,26 @@ const formatCurrency = (value: number) => {
     return formatter.format(value);
 }
 
-function Cotization({ selectedDestiny, dimensions }: { selectedDestiny?: number, dimensions: Dimensions }) {
-    const [price, setPrice] = useState<number | undefined>()
+function Cotization({ form, price, setPrice, setCourier }:
+    { form: FormInstance<CreateShipmentData>, price?: number, setPrice: (price?: number) => void, setCourier: (courier?: string) => void }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | undefined>();
 
+    const formValues = useWatch([]);
+
     const handleCotization = async () => {
+        if (areFieldsInvalid(form, DestinyAndDimensionsFields)) return;
         setLoading(true);
         setError(undefined);
+        setPrice(undefined)
+        setCourier(undefined);
+
 
         try {
             const res = await fetch(import.meta.env.VITE_SERVER_URL + "/cotization", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ destinyId: selectedDestiny, ...dimensions })
+                body: JSON.stringify({ ...formValues })
             })
 
             if (!res.ok) {
@@ -32,8 +40,9 @@ function Cotization({ selectedDestiny, dimensions }: { selectedDestiny?: number,
                 throw new Error(error);
             }
 
-            const price = await res.json()
-            setPrice(Number(price))
+            const { price, courier } = await res.json()
+            setPrice(price);
+            setCourier(courier);
         } catch (error: any) {
             setError(error.message);
         }
@@ -41,17 +50,19 @@ function Cotization({ selectedDestiny, dimensions }: { selectedDestiny?: number,
         setLoading(false);
     };
 
+    useEffect(() => {
+        const debounceTimer = setTimeout(() => {
+            handleCotization()
+        }, 1500);
 
-    const disabled = !selectedDestiny
-        || !dimensions[Dimension.Length]
-        || !dimensions[Dimension.Width]
-        || !dimensions[Dimension.Height]
-        || !dimensions[Dimension.Weight];
-
-    // TODO: Ask if cotization should be recalculated each time a destiny/dimension is changed.
-    // useEffect(() => {
-    //     handleCotization()
-    // }, [selectedDestiny, dimensions])
+        return () => clearTimeout(debounceTimer)
+    }, [
+        formValues?.destinyId,
+        formValues?.width,
+        formValues?.height,
+        formValues?.length,
+        formValues?.weight
+    ]);
 
     const showAlert = () => {
         if (loading) return;
@@ -63,9 +74,11 @@ function Cotization({ selectedDestiny, dimensions }: { selectedDestiny?: number,
             return <Alert message={`El precio de este envío es de: ${formatCurrency(price)}`} type="info" />
     }
 
-
     return <>
-        <Button onClick={handleCotization} loading={loading} disabled={disabled}>
+        <Button
+            onClick={handleCotization}
+            loading={loading}
+            disabled={areFieldsInvalid(form, DestinyAndDimensionsFields)}>
             Cotizar
         </Button>
         {showAlert()}
