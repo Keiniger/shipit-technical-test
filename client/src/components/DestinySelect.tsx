@@ -1,5 +1,7 @@
-import { Select } from "antd";
+import { Form, Select } from "antd";
 import { useEffect, useState } from "react";
+import { ShipmentFields } from "./ShipmentForm";
+const { Item } = Form;
 
 export type DestinyId = number
 
@@ -10,6 +12,8 @@ export type DestinyData = {
     name: string,
 }
 
+type SelectOption = { value: string, label: string }
+
 const capitalizeFirstLetter = (s: string) => {
     return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 }
@@ -18,17 +22,15 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
 
-function DestinySelect({ setSelectedDestiny }: { setSelectedDestiny: (id: DestinyId) => void }) {
+function DestinySelect() {
     const [destinies, setDestinies] = useState<DestinyData[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | undefined>();
 
-    const onSearch = (value: string) => {
-        console.log('search:', value);
-    };
-
-
-    const selectOptions = () => destinies?.map((d) => ({ value: String(d.id), label: capitalizeFirstLetter(d.name) }))
+    const selectOptions = () => destinies?.map((d) => ({
+        value: d.id,
+        label: capitalizeFirstLetter(d.name)
+    }) as unknown as SelectOption) // Hack to cast value to string without making it a string 
 
     const fetchDestinies = async () => {
         setLoading(true);
@@ -58,17 +60,21 @@ function DestinySelect({ setSelectedDestiny }: { setSelectedDestiny: (id: Destin
         placeholder={error}
     />
 
-    return <Select
-        showSearch
-        style={{ width: '11.5rem' }}
-        loading={loading}
-        disabled={loading}
-        placeholder={"Seleccionar destino"}
-        onChange={(value: DestinyId) => setSelectedDestiny(value)}
-        options={selectOptions()}
-        onSearch={onSearch}
-        filterOption={filterOption}
-    />
+    return <Item
+        label="Selecciona un destino para tu envio"
+        name={ShipmentFields.DestinyId}
+        required
+    >
+        <Select
+            showSearch
+            style={{ width: '11.5rem' }}
+            loading={loading}
+            disabled={loading}
+            placeholder={"Seleccionar destino"}
+            options={selectOptions()}
+            filterOption={filterOption}
+        />
+    </Item>
 }
 
 export default DestinySelect;
