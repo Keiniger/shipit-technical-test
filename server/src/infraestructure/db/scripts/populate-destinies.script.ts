@@ -17,9 +17,7 @@ async function fetchDestinations() {
       headers: config.shipit_headers,
     });
 
-    if (!response.ok) 
-      throw new Error('Network response was not ok.');
-    
+    if (!response.ok) throw new Error('Network response was not ok.');
 
     const data = await response.json();
     return data as DestinyData[];
@@ -37,6 +35,7 @@ async function populateDestinies() {
     id: d.id,
     country_name: d.country_name,
     external_id: d.region_id,
+    region_name: d.region_name,
     name: d.name,
   }));
 
