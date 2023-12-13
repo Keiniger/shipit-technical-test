@@ -5,7 +5,7 @@ type Dimension = { length: number; width: number; height: number; weight: number
 export default async function getCotizationUseCase(destinyId: number, { length, width, height, weight }: Dimension) {
   const defaultOrigin = await OriginRepository.getDefaultOrigin();
 
-  if (!defaultOrigin) throw new Error('Selected origin not found.');
+  if (!defaultOrigin) throw new Error('Origen default no encontrado.');
 
   const postData = {
     parcel: {
@@ -34,18 +34,27 @@ export default async function getCotizationUseCase(destinyId: number, { length, 
 
   if (!response.ok) {
     if (response.status === 400) {
-      const error = (await response.json()) as { message: string };
-      throw new Error(error.message);
+      const error = await response.json();
+      throw new Error((error as { message: string }).message);
     }
   }
 
-  type Cotization = { prices: { price: number }[] };
+  type Cotization = { prices: { price: number; courier: { name: string } }[] };
 
-  const cotizations = (await response.json()) as Cotization;
+  const { prices } = (await response.json()) as Cotization;
 
-  if (cotizations.prices.length === 0) return undefined;
+  if (prices.length === 0) return undefined;
 
-  const cheapestCotization = Math.min(...cotizations.prices.map((p) => p.price));
+  const priceValues = prices.map((p) => p.price);
 
-  return cheapestCotization;
+  const cheapesPrice = Math.min(...priceValues);
+
+  const cheapestCotization = prices.find((c) => c.price === cheapesPrice);
+
+  if (!cheapestCotization) throw new Error('Hubo un error al obtener la cotización.');
+
+  return {
+    price: cheapestCotization?.price,
+    courier: cheapestCotization?.courier?.name,
+  };
 }
