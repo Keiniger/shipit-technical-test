@@ -1,17 +1,33 @@
 # Prueba Técnica Desarrollador Shipit
 
-Para correr el backend basta con ejecutar los comandos
+Se puede ver la versión deployeada [aqui](https://shipit-client.onrender.com/)
+
+Para correr el backend basta con ejecutar los comandos:
 
 ```
 cd server
+npm install
 docker compose up
 ```
 
-Para correr el fronend, en cambio, debemos ejecutar los comandos
+Para correr el fronend, en cambio, debemos ejecutar los comandos:
 
 ```
 cd client
+npm install
 npm run start
+```
+
+Luego, se debe correr :
+
+```
+npm run db:migrate
+```
+
+Y para rellenar los destinos:
+
+```
+npm run db:populate-destinies
 ```
 
 Pedir por privado las variables de entorno de .env
