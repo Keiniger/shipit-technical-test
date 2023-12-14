@@ -1,4 +1,3 @@
-import { Model } from 'sequelize';
 import { ShipmentEntity } from '../entities/shipment.entity';
 import { ShipmentRepository } from '../infraestructure/db/repositories/shipment.repository';
 import { AddressRepository } from '../infraestructure/db/repositories/addresses.repository';
