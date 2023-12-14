@@ -1,8 +1,9 @@
-import { Alert, Button, Form, FormInstance } from "antd";
+import { Alert, Button, Form, FormInstance, Space } from "antd";
 import { useEffect, useState } from "react";
 import { CreateShipmentData, DestinyAndDimensionsFields } from "./ShipmentForm";
 import areFieldsInvalid from "../utils/ValidateFields";
 const { useWatch } = Form;
+import classes from './Cotization.module.scss'
 
 const formatCurrency = (value: number) => {
     const formatter = new Intl.NumberFormat('es-CL', {
@@ -74,7 +75,7 @@ function Cotization({ form, price, setPrice, setCourier }:
             return <Alert message={`El precio de este envío es de: ${formatCurrency(price)}`} type="info" />
     }
 
-    return <>
+    return <Space direction="vertical" className={classes.cotizationContainer}>
         <Button
             onClick={handleCotization}
             loading={loading}
@@ -82,7 +83,7 @@ function Cotization({ form, price, setPrice, setCourier }:
             Cotizar
         </Button>
         {showAlert()}
-    </>
+    </Space>
 }
 
 export default Cotization;
