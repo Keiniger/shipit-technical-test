@@ -1,4 +1,4 @@
-import { Button, Form, Space } from "antd";
+import { Flex, Form } from "antd";
 import DestinySelect, { DestinyId } from "./DestinySelect";
 import DimensionsInputs from "./DimensionsInputs";
 import Cotization from "./Cotization";
@@ -66,7 +66,7 @@ function ShipmentForm() {
 
     return <Form form={form} onFinish={(v) => onFinish(v)}>{
         !statusCode
-            ? <Space direction="vertical" size="large">
+            ? <Flex vertical gap="2rem">
                 <DestinySelect />
                 <DimensionsInputs />
                 <Cotization
@@ -76,7 +76,7 @@ function ShipmentForm() {
                     setCourier={setCourier}
                 />
                 <CreateShipmentModal form={form} price={price} courier={courier} setStatusCode={setStatusCode} />
-            </Space>
+            </Flex>
             : <ShipmentResult statusCode={statusCode} reset={reset} />
     }
     </Form >
