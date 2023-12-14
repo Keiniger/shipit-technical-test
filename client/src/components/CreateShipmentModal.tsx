@@ -91,13 +91,13 @@ function CreateShipmentModal({ form, price, courier, setStatusCode }: { form: Fo
                     label="Nombre"
                     rules={[{ required: true, message: 'Por favor ingresa tu nombre' }]}
                 >
-                    <Input placeholder="Isabella" />
+                    <Input autoComplete="on" placeholder="Isabella" />
                 </Item>
                 <Item
                     name={ShipmentFields.LastName}
                     label="Apellidos"
                     rules={[{ required: true, message: 'Por favor ingresa tus apellidos' }]}>
-                    <Input placeholder="Fernandez Silva" />
+                    <Input autoComplete="on" placeholder="Fernandez Silva" />
                 </Item>
                 <Item name={ShipmentFields.Email} label="E-mail"
                     rules={[
@@ -105,7 +105,7 @@ function CreateShipmentModal({ form, price, courier, setStatusCode }: { form: Fo
                         { required: true, message: 'Por favor ingresa tu E-mail' },
                     ]}
                 >
-                    <Input placeholder="isa.fernandez@gmail.com" />
+                    <Input autoComplete="on" placeholder="isa.fernandez@gmail.com" />
                 </Item>
             </Flex>
             {error && <Alert message={error} type="error" />}
