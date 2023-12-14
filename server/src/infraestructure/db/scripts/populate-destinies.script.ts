@@ -11,19 +11,6 @@ type DestinyData = {
   name: string;
 };
 
-type RegionData = {
-  id: number;
-  name: string;
-};
-
-type RawRegion = {
-  id: RegionData;
-};
-
-interface RawRegions {
-  [key: number]: RawRegion;
-}
-
 async function fetchDestinations() {
   try {
     const response = await fetch(config.shipit_endpoint + '/v/communes', {
