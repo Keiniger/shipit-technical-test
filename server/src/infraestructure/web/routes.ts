@@ -18,7 +18,7 @@ export function initRoutes(app: Application) {
     const { destinyId, length, width, height, weight } = req?.body;
 
     if (!destinyId || !length || !width || !height || !weight) {
-      return res.status(400).json({ error: 'Invalid request. Missing required fields.' });
+      return res.status(400).json({ error: 'Request inválido. Faltan campos requeridos.' });
     }
 
     try {
