@@ -9,6 +9,7 @@
     "start": "npm run build && node build/index.js",
     "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
     "db:migrate": "npx sequelize-cli db:migrate",
+    "db:populate-destinies": "ts-node src/infraestructure/db/scripts/populate-destinies.script.ts",
     "lint": "eslint . --ext .ts",
     "prettier-format": "run-script-os",
     "test": "jest",
