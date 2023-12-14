@@ -27,6 +27,9 @@ export async function initDatabase() {
 
       require(filePath);
     }
+    const associationsFile = files.find((f) => f.startsWith('associations'));
+
+    if (associationsFile) require(path.join(directoryPath, associationsFile));
   });
 
   await sequelize.sync();
