@@ -28,7 +28,7 @@ export function initRoutes(app: Application) {
 
       res.json(cotization);
     } catch (error: any) {
-      res.status(500).send({ error: error.message || 'Hubo un error al solicital la cotización.' });
+      res.status(500).send({ error: error.message || 'Hubo un error al solicitar la cotización.' });
     }
   });
 
