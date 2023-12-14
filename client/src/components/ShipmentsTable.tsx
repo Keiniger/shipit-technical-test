@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 
 const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
-    { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'Last Name', dataIndex: 'last_name', key: 'last_name' },
+    { title: 'Nombre', dataIndex: 'name', key: 'name' },
+    { title: 'Apellido', dataIndex: 'last_name', key: 'last_name' },
     { title: 'Email', dataIndex: 'email', key: 'email' },
-    { title: 'Length', dataIndex: 'length', key: 'length' },
-    { title: 'Height', dataIndex: 'height', key: 'height' },
-    { title: 'Width', dataIndex: 'width', key: 'width' },
-    { title: 'Weight', dataIndex: 'weight', key: 'weight' },
+    { title: 'Longuitud', dataIndex: 'length', key: 'length' },
+    { title: 'Altura', dataIndex: 'height', key: 'height' },
+    { title: 'Ancho', dataIndex: 'width', key: 'width' },
+    { title: 'Peso', dataIndex: 'weight', key: 'weight' },
     { title: 'Courier', dataIndex: 'courier', key: 'courier' },
-    { title: 'Price', dataIndex: 'price', key: 'price' },
-    { title: 'Created At', dataIndex: 'createdAt', key: 'createdAt' },
-    { title: 'Updated At', dataIndex: 'updatedAt', key: 'updatedAt' },
+    { title: 'Precio', dataIndex: 'price', key: 'price' },
+    { title: 'Fecha de creación', dataIndex: 'createdAt', key: 'createdAt' },
+    { title: 'Fecha de modificación', dataIndex: 'updatedAt', key: 'updatedAt' },
 ];
 
 type Shipment = {
@@ -47,7 +47,8 @@ function ShipmentsTable() {
                 return;
             }
 
-            const shipments = await res.json();
+            const shipments = await res.json() as Shipment[];
+            shipments.sort((a, b) => b.id - a.id);
             setShipments(shipments);
         } catch (error) {
             setError("Hubo un error al solicitar los envios. Inténtalo de nuevo más tarde");
