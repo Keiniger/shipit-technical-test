@@ -5,10 +5,9 @@ const Shipment = sequelize.define(
   'Shipment',
   {
     id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
       type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,

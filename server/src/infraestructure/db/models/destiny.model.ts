@@ -18,6 +18,10 @@ const Destiny = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    region_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -1,42 +1,51 @@
-import { Typography, Row, Col, Layout, Menu } from 'antd';
-import { Content, Header } from 'antd/es/layout/layout';
+import { Switch, Route, Link, useLocation } from 'react-router-dom';
+import { Typography, Row, Col, Layout, Menu, MenuProps } from 'antd';
+import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
+import { Header } from 'antd/es/layout/layout';
 const { Title } = Typography;
 
-import classes from './App.module.css';
+import classes from './App.module.scss';
 
-import DestinySelect from './components/DestinySelect';
-import DimensionsInput from './components/DimensionsInputs';
-import Cotization from './components/Cotization';
-import CreateShipment from './components/CreateShipment';
-import ShipmentResult from './components/ShipmentResult';
+import ShipmentForm from './components/ShipmentForm';
+import ShipmentsTable from './components/ShipmentsTable';
 
 function App() {
-  return (
-    <Layout className={classes.layout}>
-      <Header className={classes.header}>
-        <Title
-          className={classes.title}
-          level={2}>
-          Prueba técnica de Shipit
-        </Title>
-        <Menu theme="dark" mode="horizontal" />
-      </Header>
-      <Content className={classes.content}>
-        <Row
-          className={classes.row}
-          justify="center"
-          align="middle">
-          <Col>
-            <DestinySelect />
-            <DimensionsInput />
-            <Cotization />
-            <CreateShipment />
-            <ShipmentResult statusCode={undefined} />
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
-  );
+  const location = useLocation();
+
+  const items: MenuProps['items'] = [
+    {
+      label: <Link to="/"> Crear envio </Link>,
+      key: '/',
+      icon: <MailOutlined />,
+    },
+    {
+      label: <Link to="/shipments"> Envios </Link>,
+      key: '/shipments',
+      icon: <AppstoreOutlined />,
+    }]
+
+  return <Layout className={classes.layout}>
+    <Header className={classes.header} >
+      <Title className={classes.title} level={3}>
+        Prueba técnica de Shipit
+      </Title>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={[location?.pathname]}
+        items={items}
+        style={{ flex: 1, minWidth: 0, justifyContent: 'end' }}
+      />
+    </Header>
+    <Row className={classes.row} justify="center" align="middle">
+      <Col>
+        <Switch>
+          <Route exact path="/" component={ShipmentForm} />
+          <Route exact path="/shipments" component={ShipmentsTable} />
+        </Switch>
+      </Col>
+    </Row>
+  </Layout>
 };
 
 export default App

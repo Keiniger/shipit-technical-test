@@ -1,0 +1,11 @@
+.inputContainer {
+  label {
+    width: 4rem;
+  }
+}
+
+.inputNumber {
+  @media (max-width: 573px) {
+    width: 100%;
+  }
+}
