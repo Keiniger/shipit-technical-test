@@ -1,6 +1,6 @@
 import { Alert, Button, Form, FormInstance, Space } from "antd";
 import { useEffect, useState } from "react";
-import { CreateShipmentData, DestinyAndDimensionsFields } from "./ShipmentForm";
+import { CotizationType, CreateShipmentData, DestinyAndDimensionsFields } from "./ShipmentForm";
 import areFieldsInvalid from "../utils/ValidateFields";
 const { useWatch } = Form;
 import classes from './Cotization.module.scss'
@@ -14,8 +14,12 @@ const formatCurrency = (value: number) => {
     return formatter.format(value);
 }
 
-function Cotization({ form, price, setPrice, setCourier }:
-    { form: FormInstance<CreateShipmentData>, price?: number, setPrice: (price?: number) => void, setCourier: (courier?: string) => void }) {
+function Cotization({ form, cotization, setCotization }:
+    {
+        form: FormInstance<CreateShipmentData>,
+        cotization?: CotizationType,
+        setCotization: (c?: CotizationType) => void
+    }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | undefined>();
 
@@ -25,9 +29,7 @@ function Cotization({ form, price, setPrice, setCourier }:
         if (areFieldsInvalid(form, DestinyAndDimensionsFields)) return;
         setLoading(true);
         setError(undefined);
-        setPrice(undefined)
-        setCourier(undefined);
-
+        setCotization(undefined)
 
         try {
             const res = await fetch(import.meta.env.VITE_SERVER_URL + "/cotization", {
@@ -42,8 +44,7 @@ function Cotization({ form, price, setPrice, setCourier }:
             }
 
             const { price, courier } = await res.json()
-            setPrice(price);
-            setCourier(courier);
+            setCotization({ price, courier })
         } catch (error: any) {
             setError(error.message);
         }
@@ -71,8 +72,8 @@ function Cotization({ form, price, setPrice, setCourier }:
         if (error !== undefined)
             return <Alert message={error} type="error" />
 
-        if (price)
-            return <Alert message={`El precio de este envío es de: ${formatCurrency(price)}`} type="info" />
+        if (cotization)
+            return <Alert message={`El precio de este envío es de: ${formatCurrency(cotization.price)}`} type="info" />
     }
 
     return <Space direction="vertical" className={classes.cotizationContainer}>
