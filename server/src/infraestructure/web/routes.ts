@@ -36,7 +36,7 @@ export function initRoutes(app: Application) {
     const shipmentData = req?.body;
 
     try {
-      const shipment = await createShipmentUseCase(shipmentData);
+      const shipment = await createShipmentUseCase(shipmentData, shipmentData.destinyId);
 
       if (!shipment) return res.status(404).json({ error: 'No se pudo crear el envío.' });
 
