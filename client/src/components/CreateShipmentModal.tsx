@@ -1,9 +1,10 @@
-import { Alert, Button, Form, FormInstance, Input, Modal, Typography } from "antd";
+import { Alert, Button, Flex, Form, FormInstance, Input, Modal, Space, Typography } from "antd";
 import { useState } from "react";
 import { CreateShipmentData, DestinyAndDimensionsFields, ShipmentFields } from "./ShipmentForm";
 import areFieldsInvalid from "../utils/ValidateFields";
 const { Text } = Typography;
 const { Item } = Form;
+import classes from "./CreateShipmentModal.module.scss"
 
 export type UserInfo = {
     name?: string,
@@ -12,7 +13,6 @@ export type UserInfo = {
 }
 
 function CreateShipmentModal({ form, price, courier, setStatusCode }: { form: FormInstance<CreateShipmentData>, price?: number, courier?: string, setStatusCode: (s: number) => void }) {
-    console.log("rerender create shipment modal")
     const [loading, setLoading] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [error, setError] = useState<string | undefined>();
@@ -83,29 +83,31 @@ function CreateShipmentModal({ form, price, courier, setStatusCode }: { form: Fo
             }
         >
             <Text>
-                Por favor, ingresa los siguientes datos:
+                Por favor, ingresa los siguientes datos
             </Text>
-            <Item
-                name={ShipmentFields.Name}
-                label="Nombre"
-                rules={[{ required: true, message: 'Por favor ingresa tu nombre' }]}
-            >
-                <Input placeholder="Isabella" />
-            </Item>
-            <Item
-                name={ShipmentFields.LastName}
-                label="Apellidos"
-                rules={[{ required: true, message: 'Por favor ingresa tus apellidos' }]}>
-                <Input placeholder="Fernandez Silva" />
-            </Item>
-            <Item name={ShipmentFields.Email} label="E-mail"
-                rules={[
-                    { type: 'email', message: 'El E-mail ingresado no es válido' },
-                    { required: true, message: 'Por favor ingresa tu E-mail' },
-                ]}
-            >
-                <Input placeholder="isa.fernandez@gmail.com" />
-            </Item>
+            <Flex vertical justify="center" align="center" gap=".5rem" className={classes.personalInfoContainer}>
+                <Item
+                    name={ShipmentFields.Name}
+                    label="Nombre"
+                    rules={[{ required: true, message: 'Por favor ingresa tu nombre' }]}
+                >
+                    <Input placeholder="Isabella" />
+                </Item>
+                <Item
+                    name={ShipmentFields.LastName}
+                    label="Apellidos"
+                    rules={[{ required: true, message: 'Por favor ingresa tus apellidos' }]}>
+                    <Input placeholder="Fernandez Silva" />
+                </Item>
+                <Item name={ShipmentFields.Email} label="E-mail"
+                    rules={[
+                        { type: 'email', message: 'El E-mail ingresado no es válido' },
+                        { required: true, message: 'Por favor ingresa tu E-mail' },
+                    ]}
+                >
+                    <Input placeholder="isa.fernandez@gmail.com" />
+                </Item>
+            </Flex>
             {error && <Alert message={error} type="error" />}
         </Modal>
     </>
