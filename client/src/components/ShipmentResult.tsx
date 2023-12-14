@@ -5,8 +5,13 @@ function ShipmentResult({ statusCode, reset }: { statusCode?: number, reset: () 
     if (statusCode === undefined) return
 
     const resetButton = (msg: string) =>
-        <Item>
-            <Button onClick={reset} htmlType="reset">{msg}</Button>
+        <Item key="reset">
+            <Button
+                type="primary"
+                onClick={reset}
+                htmlType="reset">
+                {msg}
+            </Button>
         </Item>
 
     if (statusCode === 200)
