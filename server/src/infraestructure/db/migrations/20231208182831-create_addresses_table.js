@@ -6,10 +6,12 @@ module.exports = {
       destiny_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
       },
       shipment_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
       },
       createdAt: {
         allowNull: false,
