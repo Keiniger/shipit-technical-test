@@ -1,10 +1,10 @@
 import { Switch, Route, Link, useLocation } from 'react-router-dom';
 import { Typography, Row, Col, Layout, Menu, MenuProps } from 'antd';
 import { AppstoreOutlined, MailOutlined } from '@ant-design/icons';
-import { Content, Header } from 'antd/es/layout/layout';
+import { Header } from 'antd/es/layout/layout';
 const { Title } = Typography;
 
-import classes from './App.module.css';
+import classes from './App.module.scss';
 
 import ShipmentForm from './components/ShipmentForm';
 import ShipmentsTable from './components/ShipmentsTable';
@@ -37,16 +37,14 @@ function App() {
         style={{ flex: 1, minWidth: 0, justifyContent: 'end' }}
       />
     </Header>
-    <Content className={classes.content}>
-      <Row className={classes.row} justify="center" align="middle">
-        <Col>
-          <Switch>
-            <Route exact path="/" component={ShipmentForm} />
-            <Route exact path="/shipments" component={ShipmentsTable} />
-          </Switch>
-        </Col>
-      </Row>
-    </Content>
+    <Row className={classes.row} justify="center" align="middle">
+      <Col>
+        <Switch>
+          <Route exact path="/" component={ShipmentForm} />
+          <Route exact path="/shipments" component={ShipmentsTable} />
+        </Switch>
+      </Col>
+    </Row>
   </Layout>
 };
 
