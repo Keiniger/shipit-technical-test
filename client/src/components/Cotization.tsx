@@ -21,7 +21,7 @@ function Cotization({ form, price, setPrice, setCourier }:
 
     const formValues = useWatch([]);
 
-    const handleCotization = async () => {
+    async function handleCotization() {
         if (areFieldsInvalid(form, DestinyAndDimensionsFields)) return;
         setLoading(true);
         setError(undefined);
@@ -44,12 +44,13 @@ function Cotization({ form, price, setPrice, setCourier }:
             const { price, courier } = await res.json()
             setPrice(price);
             setCourier(courier);
-        } catch (error: any) {
-            setError(error.message);
+        } catch (error) {
+            type Error = { message: string }
+            setError((error as Error).message);
         }
 
         setLoading(false);
-    };
+    }
 
     useEffect(() => {
         const debounceTimer = setTimeout(() => {

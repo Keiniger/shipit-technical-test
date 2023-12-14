@@ -46,6 +46,6 @@ function App() {
       </Col>
     </Row>
   </Layout>
-};
+}
 
 export default App

@@ -1,4 +1,4 @@
-import { Alert, Button, Flex, Form, FormInstance, Input, Modal, Space, Typography } from "antd";
+import { Alert, Button, Flex, Form, FormInstance, Input, Modal, Typography } from "antd";
 import { useState } from "react";
 import { CreateShipmentData, DestinyAndDimensionsFields, ShipmentFields } from "./ShipmentForm";
 import areFieldsInvalid from "../utils/ValidateFields";
