@@ -1,8 +1,8 @@
 import { Model } from 'sequelize';
 import { ShipmentEntity } from '../entities/shipment.entity';
-import Shipment from '../infraestructure/db/models/shipment.model';
+import { ShipmentRepository } from '../infraestructure/db/repositories/shipment.repository';
 
 export default async function createShipmentUseCase(shipment: ShipmentEntity): Promise<Model> {
-  const createdShipment = await Shipment.create({ ...shipment });
+  const createdShipment = await ShipmentRepository.create(shipment);
   return createdShipment as Model;
 }
