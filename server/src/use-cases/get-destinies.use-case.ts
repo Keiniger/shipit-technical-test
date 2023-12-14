@@ -3,7 +3,7 @@ import { DestinyRepository } from '../infraestructure/db/repositories/destiny.re
 export default async function getDestiniesUseCase() {
   const destinies = await DestinyRepository.getAllDestinies();
 
-  if (!destinies) throw new Error('Destinies not found.');
+  if (!destinies) throw new Error('No se encontraron destinos.');
 
   return destinies;
 }

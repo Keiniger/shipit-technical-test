@@ -7,10 +7,6 @@ import { useForm } from "antd/es/form/Form";
 import { useState } from "react";
 import ShipmentResult from "./ShipmentResult";
 
-const onFinish = (values: CreateShipmentData) => {
-    console.log('Received values:', values);
-};
-
 export enum ShipmentFields {
     DestinyId = 'destinyId',
     Length = 'length',
@@ -41,6 +37,10 @@ export const AllShipmentFields = [
     ...PersonalInfoFields
 ]
 
+export type CotizationType = {
+    price: number,
+    courier: string
+}
 export interface CreateShipmentData {
     [ShipmentFields.DestinyId]?: DestinyId;
     [ShipmentFields.Length]?: number;
@@ -55,27 +55,25 @@ export interface CreateShipmentData {
 function ShipmentForm() {
     const [form] = useForm<CreateShipmentData>();
     const [statusCode, setStatusCode] = useState<number | undefined>();
-    const [price, setPrice] = useState<number | undefined>();
-    const [courier, setCourier] = useState<string | undefined>();
+    const [cotization, setCotization] = useState<CotizationType | undefined>();
 
     const reset = () => {
         form.resetFields();
-        setPrice(undefined);
+        setCotization(undefined);
         setStatusCode(undefined);
     }
 
-    return <Form form={form} onFinish={(v) => onFinish(v)}>{
+    return <Form form={form}>{
         !statusCode
             ? <Flex vertical gap="2rem">
                 <DestinySelect />
                 <DimensionsInputs />
                 <Cotization
                     form={form}
-                    price={price}
-                    setPrice={setPrice}
-                    setCourier={setCourier}
+                    cotization={cotization}
+                    setCotization={setCotization}
                 />
-                <CreateShipmentModal form={form} price={price} courier={courier} setStatusCode={setStatusCode} />
+                <CreateShipmentModal form={form} cotization={cotization} setStatusCode={setStatusCode} />
             </Flex>
             : <ShipmentResult statusCode={statusCode} reset={reset} />
     }

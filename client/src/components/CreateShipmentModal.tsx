@@ -1,6 +1,6 @@
 import { Alert, Button, Flex, Form, FormInstance, Input, Modal, Typography } from "antd";
 import { useState } from "react";
-import { CreateShipmentData, DestinyAndDimensionsFields, ShipmentFields } from "./ShipmentForm";
+import { CotizationType, CreateShipmentData, DestinyAndDimensionsFields, ShipmentFields } from "./ShipmentForm";
 import areFieldsInvalid from "../utils/ValidateFields";
 const { Text } = Typography;
 const { Item } = Form;
@@ -12,7 +12,7 @@ export type UserInfo = {
     email?: string,
 }
 
-function CreateShipmentModal({ form, price, courier, setStatusCode }: { form: FormInstance<CreateShipmentData>, price?: number, courier?: string, setStatusCode: (s: number) => void }) {
+function CreateShipmentModal({ form, cotization, setStatusCode }: { form: FormInstance<CreateShipmentData>, cotization?: CotizationType, setStatusCode: (s: number) => void }) {
     const [loading, setLoading] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [error, setError] = useState<string | undefined>();
@@ -25,7 +25,7 @@ function CreateShipmentModal({ form, price, courier, setStatusCode }: { form: Fo
 
         try {
             shipmentData = await form.validateFields();
-            if (!price || !courier) throw new Error();
+            if (!cotization) throw new Error();
         }
         catch (error) {
             setError("Hay errores en los campos ingresados. Por favor revisalos e intentalo nuevamente");
@@ -37,7 +37,11 @@ function CreateShipmentModal({ form, price, courier, setStatusCode }: { form: Fo
             const res = await fetch(import.meta.env.VITE_SERVER_URL + "/shipment", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...shipmentData, price, courier })
+                body: JSON.stringify({
+                    ...shipmentData,
+                    price: cotization.price,
+                    courier: cotization.courier
+                })
             })
 
             if (!res.ok) {
@@ -63,7 +67,7 @@ function CreateShipmentModal({ form, price, courier, setStatusCode }: { form: Fo
         <Button
             type="primary"
             onClick={showModal}
-            disabled={areFieldsInvalid(form, DestinyAndDimensionsFields) || !price || !courier}
+            disabled={areFieldsInvalid(form, DestinyAndDimensionsFields) || !cotization}
         >
             Crear envio
         </Button>

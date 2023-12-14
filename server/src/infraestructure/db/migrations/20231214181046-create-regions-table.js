@@ -2,20 +2,12 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('destinies', {
+    await queryInterface.createTable('regions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-      },
-      country_name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      external_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
       },
       name: {
         type: Sequelize.STRING,
@@ -33,6 +25,7 @@ module.exports = {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('destinies');
   },

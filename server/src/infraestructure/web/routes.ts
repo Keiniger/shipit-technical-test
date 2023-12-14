@@ -18,7 +18,7 @@ export function initRoutes(app: Application) {
     const { destinyId, length, width, height, weight } = req?.body;
 
     if (!destinyId || !length || !width || !height || !weight) {
-      return res.status(400).json({ error: 'Invalid request. Missing required fields.' });
+      return res.status(400).json({ error: 'Request inválido. Faltan campos requeridos.' });
     }
 
     try {
@@ -28,7 +28,7 @@ export function initRoutes(app: Application) {
 
       res.json(cotization);
     } catch (error: any) {
-      res.status(500).send({ error: error.message || 'Hubo un error al solicital la cotización.' });
+      res.status(500).send({ error: error.message || 'Hubo un error al solicitar la cotización.' });
     }
   });
 
@@ -36,7 +36,7 @@ export function initRoutes(app: Application) {
     const shipmentData = req?.body;
 
     try {
-      const shipment = await createShipmentUseCase(shipmentData);
+      const shipment = await createShipmentUseCase(shipmentData, shipmentData.destinyId);
 
       if (!shipment) return res.status(404).json({ error: 'No se pudo crear el envío.' });
 
