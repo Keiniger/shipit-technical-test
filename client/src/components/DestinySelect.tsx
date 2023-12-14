@@ -2,6 +2,7 @@ import { Form, Select } from "antd";
 import { useEffect, useState } from "react";
 import { ShipmentFields } from "./ShipmentForm";
 const { Item } = Form;
+import classes from "./DestinySelect.module.scss";
 
 export type DestinyId = number
 
@@ -60,14 +61,9 @@ function DestinySelect() {
         placeholder={error}
     />
 
-    return <Item
-        label="Selecciona un destino para tu envio"
-        name={ShipmentFields.DestinyId}
-        required
-    >
+    return <Item name={ShipmentFields.DestinyId} required className={classes.destinyContainer}>
         <Select
             showSearch
-            style={{ width: '11.5rem' }}
             loading={loading}
             disabled={loading}
             placeholder={"Seleccionar destino"}
